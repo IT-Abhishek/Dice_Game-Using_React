@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+
+<!-- “StAuth10065: I Abhishek Chauhan, 000815438 certify that this material is my original work. 
+No other person’s work has been used without due acknowledgement. 
+I have not made my work available to anyone else.” -->
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js" integrity="sha512-kp7YHLxuJDJcOzStgd6vtpxr4ZU9kjn77e6dBsivSz+pUuAuMlE2UTdKB7jjsWT84qbS8kdCWHPETnP/ctrFsA==" crossorigin="anonymous"></script>
+
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <style>
+
+    body{
+        background-color: tan;
+    }
+
+    .dice{
+        margin: 10px;
+        border: 2px solid black;
+        width: 100px;
+        height: 100px;
+        border-radius: 30%;
+        background-color: rgb(228, 225, 78);
+        }
+
+    .diecAndButton{
+        display: flex;
+        text-align: center;
+        flex-direction: column;
+    }
+
+    .diecAndButton button{
+        width: 50px;
+        height: 50px;
+        margin: auto;
+        border-radius: 50%;
+        background-color: rgb(243, 225, 64);
+        font-weight: bolder;
+    }
+
+    .dice h1{
+        text-align: center;
+        font-size: xxx-large;
+    }
+
+    .butonDiv{
+        width: fit-content;
+        
+    }
+
+    .butonDiv button{
+        width: 50px;
+        height: 50px;
+        margin: 10px;
+        border-radius: 50%;
+        background-color: springgreen;
+    }
+
+    .dicedisplay{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .buttons{
+        display: flex;
+        justify-content: center;
+    }
+
+    .numberOfDice{
+        text-align: center;
+        border: 2px solid black;
+        margin: 20px;
+        display: flex;
+        flex-direction: column;
+        width: fit-content;
+        margin-top: 10px;
+        padding: 10px;
+        border-radius: 27%;
+        background-color: darkseagreen;
+    }
+
+    .numberOfSides{
+        text-align: center;
+        border: 2px solid black;
+        margin: 20px;
+        display: flex;
+        flex-direction: column;
+        width: fit-content;
+        margin-top: 10px;
+        padding: 10px;
+        border-radius: 27%;
+        background-color: darkseagreen;
+    }
+
+    .rollDiv{
+        width: fit-content;
+        margin: auto;
+    }
+
+    .rollButton{
+        width: 136px;
+        height: 82px;
+        margin: 10px;
+        border-radius: 50%;
+        background-color: springgreen;
+        font-size: xxx-large;
+    }
+
+    .contain{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        width: fit-content;
+        margin: auto;
+        padding: 20px;
+    }
+
+    .scoreTag{
+        text-align: center;
+        margin: 50px;
+        font-size: xxx-large;
+        font-family: fantasy;
+    }
+
+    </style>
+
+    <title>Lab 5</title>
+
+    <script type="text/babel">
+
+    class Dice extends React.Component{
+
+        render(){
+            return (<div className="diecAndButton">
+                    <div className="dice"><h1 id="score">{this.props.diceValue}</h1></div>
+                    
+                    </div>
+                    )
+        };
+        
+    }
+
+    Dice.defaultProps={
+        diceValue:0,
+        diceSides:6
+    }
+
+    class DiceDisplay extends React.Component{
+        constructor(props) {
+                super(props);
+                this.state = {diceNumbers:"1",sides:"6"};
+        }
+    
+        render(){
+            let { props } = this
+            let dice=[]
+            
+            let score=0
+            for(let i=0;i<props.diceNumbers;i++){
+                var s=props.sides
+                var x = Math.floor(Math.random()*s+1); 
+                score+=x
+                dice.push(
+                    <Dice diceValue={x} diceSides={this.state.sides}/>
+                )
+
+                
+            }
+
+
+            return (<div className="scoreDisplay">
+                    <h1 className="scoreTag">Score: {score}</h1>
+                    <div className="dicedisplay">{dice}</div>
+                    </div>
+                    )
+        }
+    }
+
+    class ChnageDiceNumber extends React.Component{
+        constructor(props) {
+                super(props);
+                this.state = {number: 1,side:6};
+        }
+
+        increasSide(){
+            var newState=this.state.side+1;
+            this.setState({side:newState});
+        }
+
+        decreaseSide(){
+            if(this.state.side>2){
+                var myNewState = this.state.side - 1;
+                this.setState({ side: myNewState });  
+            }
+        }
+
+        increaseDice () {
+            var myNewState = this.state.number + 1;
+            this.setState({ number: myNewState });  
+        } 
+        
+        decreaseDice(){
+            if(this.state.number>1){
+                var myNewState = this.state.number - 1;
+                this.setState({ number: myNewState });  
+            }
+        }
+
+        roll(){
+            var newState=this.state.number;
+            this.setState({number:newState});
+        }
+
+        render(){
+            return (<div>
+                        <div>
+                            <div className="contain">
+                            <div className="rollDiv">
+                                <button className="rollButton" onClick={this.roll.bind(this)}>Roll</button>    
+                            </div>
+                            <div>
+                            <div className="numberOfDice">
+                            <h2>Number of Dice</h2>
+                            <div className="buttons">
+                                <div className="butonDiv">
+                                <button className="glyphicon glyphicon-arrow-up" onClick={this.increaseDice.bind(this)}></button>
+                            </div>
+                            <h1>{this.state.number}</h1>
+                            <div className="butonDiv">
+                                <button className="glyphicon glyphicon-arrow-down" onClick={this.decreaseDice.bind(this)}></button>
+                            </div>
+                            </div>
+                            </div>
+                            </div>
+
+
+                            <div className="numberOfSides">
+                            <h2>Number of Sides</h2>
+                            <div className="buttons">
+                                <div className="butonDiv">
+                                <button className="glyphicon glyphicon-arrow-up" onClick={this.increasSide.bind(this)}></button>
+                            </div>
+                            <h1>{this.state.side}</h1>
+                            <div className="butonDiv">
+                                <button className="glyphicon glyphicon-arrow-down" onClick={this.decreaseSide.bind(this)}></button>
+                            </div>
+                            
+                            </div>
+
+                        </div>
+                    </div>
+                    
+                    <div><DiceDisplay diceNumbers={this.state.number} sides={this.state.side} /></div>
+                    </div>
+                    </div>
+                );
+        }
+    }
+
+
+
+
+    ReactDOM.render(
+        <ChnageDiceNumber />,
+        document.getElementById('root')
+    );
+   
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+</html>
